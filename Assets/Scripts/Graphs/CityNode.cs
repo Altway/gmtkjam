@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum NodeType{PassagePieton, Route, Trottoir, EntreeGarage, Batiment}
+public enum NodeType{Crossroad, Street, Pavement, Entrance, Building}
 public class CityNode : MonoBehaviour
 {
     public NodeType type;
@@ -32,20 +32,20 @@ public class CityNode : MonoBehaviour
                 neighbors.Add(hit.transform.gameObject.GetComponent<CityNode>());
         }
     }
-    void ChangeColor(){
-        if(type == NodeType.PassagePieton){
+    public void ChangeColor(){
+        if(type == NodeType.Crossroad){
             gameObject.GetComponent<Renderer>().material.color = new Color(0.6f,0.6f,0.6f, 1);
         }
-        else if(type == NodeType.Route){
+        else if(type == NodeType.Street){
             gameObject.GetComponent<Renderer>().material.color = new Color(0.1f,0.1f,0.1f, 1);
         }
-        else if(type == NodeType.Trottoir){
+        else if(type == NodeType.Pavement){
             gameObject.GetComponent<Renderer>().material.color = new Color(0.8f,0.8f,0.8f, 1);
         }
-        else if(type == NodeType.EntreeGarage){
+        else if(type == NodeType.Entrance){
             gameObject.GetComponent<Renderer>().material.color = new Color(0.2f,0.2f,0.2f, 1);
         }
-        else if(type == NodeType.Batiment){
+        else if(type == NodeType.Building){
             gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
         }
     }
