@@ -6,9 +6,12 @@ public enum WalkerState{Calm, Fear, Rage}
 public enum CarState{Calm, Rage}
 public class AgentsManager : MonoBehaviour
 {
-    public List<Walker> allWalkers = new List<Walker>();
+    public List<Walker> allWalker = new List<Walker>();
     public List<Car> allCars = new List<Car>();
     public bool started;
+
+    public float timer;
+    public float cooldown;
     void Start()
     {
         
@@ -23,65 +26,77 @@ public class AgentsManager : MonoBehaviour
             return;
         }
 
-        for(int i = 0; i<allWalkers.Count; i++){
-            if(allWalkers[i].state == WalkerState.Calm){
-                allWalkers[i].myRend.material.color = Color.white;
-                if(allWalkers[i].waiting){
-                    allWalkers[i].waitingTimer+= Time.deltaTime;
-                    if(allWalkers[i].waitingTimer>= allWalkers[i].waitingCD){
-                        allWalkers[i].state = WalkerState.Rage;
-                    }
+        timer += Time.deltaTime;
+        if (timer <= cooldown) 
+            return;
+        else
+            timer = 0;
+        for(int i = 0; i<allWalker.Count; i++){
+            Walker currentWalker = allWalker[i];
+            // I am calm
+            if(currentWalker.state == WalkerState.Calm){
+                currentWalker.myRend.material.color = Color.white;
+                // I am waiting
+                if(currentWalker.waiting){
+                    currentWalker.waitingTimer+= Time.deltaTime;
+                    // I am upset
+                    if(currentWalker.waitingTimer>= currentWalker.waitingCD)
+                        currentWalker.state = WalkerState.Rage;
                 }else{
-                    if(allWalkers[i].waitingTimer >= 0){
-                        allWalkers[i].waitingTimer -= Time.deltaTime;
-                    }
+                    // I move so I cool-off
+                    currentWalker.waitingTimer -= Mathf.Min(0, Time.deltaTime);
                 }
-                if(!allWalkers[i].calmPathPicked){
-                    allWalkers[i].path = allWalkers[i].FindPathCalm(allWalkers[i].currentNode, allWalkers[i].testingDestination);
-                    allWalkers[i].index = 0;
-                    allWalkers[i].calmPathPicked = true;
-                    allWalkers[i].fearPathPicked = false;
-                    allWalkers[i].ragePathPicked = false;
-                }else{
-                    if(allWalkers[i].currentNode != allWalkers[i].testingDestination){
-                        allWalkers[i].MoveToNextNode();
-                    }
-                    else{
-                        Destroy(allWalkers[i].gameObject);
-                        allWalkers.Remove(allWalkers[i]);
+                if(currentWalker.calmPathPicked){
+                     // I Already have a path
+                    if(currentWalker.currentNode == currentWalker.testingDestination) {
+                        // Reached my destination
+                        Destroy(currentWalker.gameObject);
+                        allWalker.Remove(currentWalker);
                         continue;
-                    }
-                }
-            }
-            else if(allWalkers[i].state == WalkerState.Fear){
-                allWalkers[i].myRend.material.color = Color.blue;
-                allWalkers[i].waiting = false;
-                allWalkers[i].waitingTimer = 0;
-            }
-            else if(allWalkers[i].state == WalkerState.Rage){
-                allWalkers[i].myRend.material.color = Color.red;
-                allWalkers[i].waiting = false;
-                allWalkers[i].waitingTimer = 0;
-                allWalkers[i].rageTimer += Time.deltaTime;
-                if(allWalkers[i].rageTimer >= allWalkers[i].rageCooldown){
-                    if(allWalkers[i].currentNode.type == NodeType.Pavement || allWalkers[i].currentNode.type == NodeType.PedestrianEntrance || allWalkers[i].currentNode.type == NodeType.CarEntrance){
-                        allWalkers[i].rageTimer = 0;
-                        allWalkers[i].state = WalkerState.Calm;
-                    }
-                }
-                if(!allWalkers[i].ragePathPicked){
-                    allWalkers[i].path = allWalkers[i].FindPath(allWalkers[i].currentNode, allWalkers[i].testingDestination);
-                    allWalkers[i].index = 0;
-                    allWalkers[i].calmPathPicked = false;
-                    allWalkers[i].fearPathPicked = false;
-                    allWalkers[i].ragePathPicked = true;
+                    } else
+                        // Next move
+                        currentWalker.MoveToNextNode();
                 }else{
-                    if(allWalkers[i].currentNode != allWalkers[i].testingDestination){
-                        allWalkers[i].MoveToNextNode();
+                    // I look for a path
+                    currentWalker.path = currentWalker.FindPathCalm(currentWalker.currentNode, currentWalker.testingDestination);
+                    if (currentWalker.path.Count != 0) {
+                        // I Found a path
+                        currentWalker.index = 0;
+                        currentWalker.calmPathPicked = true;
+                        currentWalker.fearPathPicked = false;
+                        currentWalker.ragePathPicked = false;
+                    }
+                }
+            }
+            else if(currentWalker.state == WalkerState.Fear){
+                currentWalker.myRend.material.color = Color.blue;
+                currentWalker.waiting = false;
+                currentWalker.waitingTimer = 0;
+            }
+            else if(currentWalker.state == WalkerState.Rage){
+                currentWalker.myRend.material.color = Color.red;
+                currentWalker.waiting = false;
+                currentWalker.waitingTimer = 0;
+                currentWalker.rageTimer += Time.deltaTime;
+                if(currentWalker.rageTimer >= currentWalker.rageCooldown){
+                    if(currentWalker.currentNode.type == NodeType.Pavement || currentWalker.currentNode.type == NodeType.PedestrianEntrance || currentWalker.currentNode.type == NodeType.CarEntrance){
+                        currentWalker.rageTimer = 0;
+                        currentWalker.state = WalkerState.Calm;
+                    }
+                }
+                if(!currentWalker.ragePathPicked){
+                    currentWalker.path = currentWalker.FindPath(currentWalker.currentNode, currentWalker.testingDestination);
+                    currentWalker.index = 0;
+                    currentWalker.calmPathPicked = false;
+                    currentWalker.fearPathPicked = false;
+                    currentWalker.ragePathPicked = true;
+                }else{
+                    if(currentWalker.currentNode != currentWalker.testingDestination){
+                        currentWalker.MoveToNextNode();
                     }
                     else{
-                        Destroy(allWalkers[i].gameObject);
-                        allWalkers.Remove(allWalkers[i]);
+                        Destroy(currentWalker.gameObject);
+                        allWalker.Remove(currentWalker);
                         continue;
                     }
                 }
@@ -103,12 +118,19 @@ public class AgentsManager : MonoBehaviour
                 }
                 if(!allCars[i].calmPathPicked){
                     allCars[i].path = allCars[i].FindPathCalm(allCars[i].currentNode, allCars[i].testingDestination);
-                    allCars[i].index = 0;
-                    allCars[i].calmPathPicked = true;
-                    allCars[i].ragePathPicked = false;
+                    if (allCars[i].path.Count == 0) {
+                        print("YOLO");
+                    }
+                    if (allCars[i].path.Count != 0) {
+                        allCars[i].index = 0;
+                        allCars[i].calmPathPicked = true;
+                        allCars[i].ragePathPicked = false;
+                    }
                 }else{
                     if(allCars[i].currentNode != allCars[i].testingDestination){
-                        allCars[i].MoveToNextNode();
+                        if (allCars[i].path.Count != 0) {
+                            allCars[i].MoveToNextNode();
+                        }
                     }
                     else{
                         Destroy(allCars[i].gameObject);

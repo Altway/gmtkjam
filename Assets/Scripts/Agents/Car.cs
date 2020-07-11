@@ -30,7 +30,7 @@ public class Car : MonoBehaviour
     }
 
     public List<CityNode> FindPath(CityNode start, CityNode destination) {
-        List<CityNode> path = new List<CityNode>();
+        path.Clear();
         Queue<CityNode> frontier = new Queue<CityNode>();
         frontier.Enqueue(start);
         Dictionary<CityNode, CityNode> visited = new Dictionary<CityNode, CityNode>();
@@ -39,6 +39,9 @@ public class Car : MonoBehaviour
         int control = 0;
         while(frontier.Count > 0 || control < MAX) {
 
+            if (frontier.Count == 0){
+                break;
+            }
             CityNode tmp = frontier.Dequeue();
             if (tmp == destination) {
                 Debug.Log("Found destination");
@@ -54,21 +57,23 @@ public class Car : MonoBehaviour
             control++;
 
         }
-        CityNode path_temp = destination;
-        path.Add(destination);
-        while(true) {
-            path_temp = visited[path_temp];
-            path.Add(path_temp);
-            if (visited[path_temp] == currentNode)
-                break;
+        if (frontier.Count != 0) {
+            CityNode path_temp = destination;
+            path.Add(destination);
+            while(true) {
+                path_temp = visited[path_temp];
+                path.Add(path_temp);
+                if (visited[path_temp] == currentNode)
+                    break;
+            }
+            path.Add(currentNode);
+            path.Reverse();
         }
-        path.Add(currentNode);
-        path.Reverse();
         return path;
 
     }
     public List<CityNode> FindPathCalm(CityNode start, CityNode destination) {
-        List<CityNode> path = new List<CityNode>();
+        path.Clear();
         Queue<CityNode> frontier = new Queue<CityNode>();
         frontier.Enqueue(start);
         Dictionary<CityNode, CityNode> visited = new Dictionary<CityNode, CityNode>();
@@ -78,15 +83,17 @@ public class Car : MonoBehaviour
         int control = 0;
         while(frontier.Count > 0 || control < MAX) {
 
+            if (frontier.Count == 0){
+                break;
+            }
             CityNode tmp = frontier.Dequeue();
             if (tmp == destination) {
-                Debug.Log("Found destination");
                 break;
             }
 
             foreach(CityNode node in tmp.neighbors) {
                 if (!visited.ContainsKey(node)) {
-                    if(node.type == NodeType.CarEntrance || node.type == NodeType.Crossroad || node.type == NodeType.Street || node.type == NodeType.CarEntrance){
+                    if(node.type == NodeType.CarEntrance || node.type == NodeType.Street || node.type == NodeType.CarEntrance){
                         frontier.Enqueue(node);
                         visited[node] = tmp;
                     }
@@ -95,16 +102,18 @@ public class Car : MonoBehaviour
             control++;
 
         }
-        CityNode path_temp = destination;
-        path.Add(destination);
-        while(true) {
-            path_temp = visited[path_temp];
-            path.Add(path_temp);
-            if (visited[path_temp] == currentNode)
-                break;
+        if (frontier.Count != 0) {
+            CityNode path_temp = destination;
+            path.Add(destination);
+            while(true) {
+                path_temp = visited[path_temp];
+                path.Add(path_temp);
+                if (visited[path_temp] == currentNode)
+                    break;
+            }
+            path.Add(currentNode);
+            path.Reverse();
         }
-        path.Add(currentNode);
-        path.Reverse();
         return path;
 
     }

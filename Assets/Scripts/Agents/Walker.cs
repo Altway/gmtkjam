@@ -27,23 +27,20 @@ public class Walker : MonoBehaviour
     {
         cityGraph = GameObject.Find("CityGraph").GetComponent<CityGraph>();
         agentsManager = GameObject.Find("GameManager").GetComponent<AgentsManager>();
-        agentsManager.allWalkers.Add(this);
+        agentsManager.allWalker.Add(this);
         myRend = gameObject.GetComponent<Renderer>();
     }
 
     public List<CityNode> FindPath(CityNode start, CityNode destination) {
-        List<CityNode> path = new List<CityNode>();
         Queue<CityNode> frontier = new Queue<CityNode>();
         frontier.Enqueue(start);
         Dictionary<CityNode, CityNode> visited = new Dictionary<CityNode, CityNode>();
-        visited[start] = null;
         int MAX = 1000;
         int control = 0;
         while(frontier.Count > 0 || control < MAX) {
 
             CityNode tmp = frontier.Dequeue();
             if (tmp == destination) {
-                Debug.Log("Found destination");
                 break;
             }
 
@@ -52,6 +49,9 @@ public class Walker : MonoBehaviour
                     frontier.Enqueue(node);
                     visited[node] = tmp;
                 }
+            }
+            if (frontier.Count == 0){
+                return path;
             }
             control++;
 
@@ -70,34 +70,40 @@ public class Walker : MonoBehaviour
 
     }
     public List<CityNode> FindPathCalm(CityNode start, CityNode destination) {
-        List<CityNode> path = new List<CityNode>();
         Queue<CityNode> frontier = new Queue<CityNode>();
-        frontier.Enqueue(start);
         Dictionary<CityNode, CityNode> visited = new Dictionary<CityNode, CityNode>();
-        visited[start] = null;
+        frontier.Enqueue(start);
 
         int MAX = 1000;
         int control = 0;
         while(frontier.Count > 0 || control < MAX) {
 
             CityNode tmp = frontier.Dequeue();
-            if (tmp == destination) {
-                Debug.Log("Found destination");
+            if (tmp == destination)
                 break;
-            }
 
             foreach(CityNode node in tmp.neighbors) {
                 if (!visited.ContainsKey(node)) {
-                    if(node.type == NodeType.PedestrianEntrance || node.type == NodeType.Crossroad || node.type == NodeType.Pavement || node.type == NodeType.CarEntrance){
+                    if(node.type == NodeType.PedestrianEntrance || node.type == NodeType.Pavement || node.type == NodeType.CarEntrance){
                         frontier.Enqueue(node);
                         visited[node] = tmp;
                     }
                 }
             }
-            control++;
+            if (frontier.Count == 0)
+                return path;
 
+            control++;
         }
-        CityNode path_temp = destination;
+
+/*         foreach (KeyValuePair<CityNode, CityNode> kvp in visited)
+        {
+            if (kvp.Key != null && kvp.Value != null)
+                print("Key =" + kvp.Key.transform.position +"Value =" + kvp.Value.transform.position);
+            else
+                print(kvp.Key.transform.position);
+        }
+  */       CityNode path_temp = destination;
         path.Add(destination);
         while(true) {
             path_temp = visited[path_temp];
@@ -107,6 +113,7 @@ public class Walker : MonoBehaviour
         }
         path.Add(currentNode);
         path.Reverse();
+
         return path;
 
     }
@@ -151,7 +158,7 @@ public class Walker : MonoBehaviour
     }*/
 
     public void MoveToNextNode(){
-        if((new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(path[index+1].transform.position.x, 0, path[index+1].transform.position.z)).magnitude < 0.1f){
+        if((new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(path[index+1].transform.position.x, 0, path[index+1].transform.position.z)).magnitude < 0.2f){
             if(state == WalkerState.Rage || state == WalkerState.Fear){
                 index++;
                 currentNode = path[index];
