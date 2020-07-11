@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &31482050958581861
+--- !u!1 &988923128763957443
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1814811929327254620}
-  - component: {fileID: 7198527779124913713}
-  - component: {fileID: 5314717452763278821}
-  - component: {fileID: 884669233491042924}
-  - component: {fileID: 7205847144830439361}
+  - component: {fileID: 3389942491062367985}
+  - component: {fileID: 1423395890563079414}
+  - component: {fileID: 6580719499373879921}
+  - component: {fileID: 6502266345487477767}
+  - component: {fileID: 6756968029996034757}
   m_Layer: 0
-  m_Name: TrafficLight
+  m_Name: PedestrianLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1814811929327254620
+--- !u!4 &3389942491062367985
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 31482050958581861}
+  m_GameObject: {fileID: 988923128763957443}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.58031774, y: 3.903725, z: 2.4610593}
+  m_LocalScale: {x: 0.4, y: 0.6, z: 0.2}
   m_Children:
-  - {fileID: 1638300177316414350}
+  - {fileID: 1324797412481127142}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7198527779124913713
+--- !u!33 &1423395890563079414
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 31482050958581861}
+  m_GameObject: {fileID: 988923128763957443}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &5314717452763278821
+--- !u!23 &6580719499373879921
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 31482050958581861}
+  m_GameObject: {fileID: 988923128763957443}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -82,35 +82,35 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &884669233491042924
+--- !u!65 &6502266345487477767
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 31482050958581861}
+  m_GameObject: {fileID: 988923128763957443}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7205847144830439361
+--- !u!114 &6756968029996034757
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 31482050958581861}
+  m_GameObject: {fileID: 988923128763957443}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d047b00d6f28d484eb2742830c6940a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 6dc4a143f7eb365449121a45e37c7813, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _switchingLightTimer: 1.5
   responsibleNode: []
   conjugatedTrafficLight: []
---- !u!1 &8076056727292287586
+--- !u!1 &2700551897317181875
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,10 +118,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1638300177316414350}
-  - component: {fileID: 2868025325000831303}
-  - component: {fileID: 1944573406774233111}
-  - component: {fileID: 2584226134291540815}
+  - component: {fileID: 1324797412481127142}
+  - component: {fileID: 5012887686133565642}
+  - component: {fileID: 8148583982901914307}
+  - component: {fileID: 2620086467073279115}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -129,35 +129,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1638300177316414350
+--- !u!4 &1324797412481127142
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8076056727292287586}
+  m_GameObject: {fileID: 2700551897317181875}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.476, z: 0}
-  m_LocalScale: {x: 0.1, y: 1, z: 0.1}
+  m_LocalPosition: {x: 0, y: -0.882, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.4, z: 0.1}
   m_Children: []
-  m_Father: {fileID: 1814811929327254620}
+  m_Father: {fileID: 3389942491062367985}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2868025325000831303
+--- !u!33 &5012887686133565642
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8076056727292287586}
+  m_GameObject: {fileID: 2700551897317181875}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1944573406774233111
+--- !u!23 &8148583982901914307
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8076056727292287586}
+  m_GameObject: {fileID: 2700551897317181875}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -190,17 +190,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &2584226134291540815
+--- !u!136 &2620086467073279115
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8076056727292287586}
+  m_GameObject: {fileID: 2700551897317181875}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0.000000119209275, y: 0, z: -0.00000008940697}

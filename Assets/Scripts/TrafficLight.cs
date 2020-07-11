@@ -2,63 +2,72 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class TrafficLight : MonoBehaviour
 {
-    private enum COLOR {Red, Orange, Green};
-    private TrafficLight.COLOR _color; 
+    public LightColor _color; 
     public float _switchingLightTimer = 1.5f;
     public List<CityNode> responsibleNode;
-    public List<TrafficLight> conjugatedTrafficLight;
+    public TrafficLight conjugatedTrafficLight;
+    public WalkerLight conjugatedWalkerLight;
 
-    // Start is called before the first frame update
     void Awake()
     {
-        
-        /*for(int i = 0){
-            _color = COLOR.Red;
+        if (_color == LightColor.Red)
             gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
-        }*/
+        else if (_color == LightColor.Green)
+            gameObject.GetComponent<Renderer>().material.color = new Color(0f,1f,0f, 1);
+        else if (_color == LightColor.Orange)
+            gameObject.GetComponent<Renderer>().material.color = new Color(1f,0.45f,0f, 1);
+    }
+
+    public void OnMouseUp() {
+        StartCoroutine(SwitchColor(_switchingLightTimer));
+    }
+
+    public void SetColor(LightColor color) {
+        _color = color;
+        if (color == LightColor.Red) {
+            gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
+            ModifyCityNode(responsibleNode, NodeType.Pavement);
+        }
+        else if (color == LightColor.Green) {
+            gameObject.GetComponent<Renderer>().material.color = new Color(0f,1f,0f, 1);
+            ModifyCityNode(responsibleNode, NodeType.Street);
+        }
+        else if (color == LightColor.Orange) {
+            gameObject.GetComponent<Renderer>().material.color = new Color(1f,0.45f,0f, 1);
+            //ModifyCityNode(responsibleNode, NodeType.Building);
+        }
+    }
+ 
+    public void ModifyCityNode(List<CityNode> cityNode_list, NodeType nodetype) {
         foreach(CityNode node in responsibleNode) {
-            node.type = NodeType.Street;
+            node.type = nodetype;
             node.ChangeColor();
         }
     }
 
-    public void OnMouseUp() {
-        StartCoroutine(sleepSeconds(_switchingLightTimer));
-        //conjugatedTrafficLight.OnMouseUp();
-    }
-
-    IEnumerator sleepSeconds(float seconds)
+    IEnumerator SwitchColor(float seconds)
     {
-         if (_color == COLOR.Red) {
-            _color = COLOR.Green;
-            gameObject.GetComponent<Renderer>().material.color = new Color(0f,1f,0f, 1);
-            foreach(CityNode node in responsibleNode) {
-                node.type = NodeType.Street;
-                node.ChangeColor();
+        if (_color == LightColor.Red) {
+            if (conjugatedTrafficLight != null) {
+                conjugatedWalkerLight.SwitchColor();
+                conjugatedTrafficLight.SetColor(LightColor.Orange);
+                yield return new WaitForSeconds(seconds);
+                conjugatedTrafficLight.SetColor(LightColor.Red);
             }
-        } else if (_color == COLOR.Orange) {
-            Debug.Log("I am Orange, nothing happen");
-            foreach(CityNode node in responsibleNode) {
-                node.type = NodeType.Street;
-                node.ChangeColor();
-            }
-        } else if (_color == COLOR.Green) {
-            _color = COLOR.Orange;
-            gameObject.GetComponent<Renderer>().material.color = new Color(1f,0.45f,0f, 1);
-            foreach(CityNode node in responsibleNode) {
-                node.type = NodeType.Street;
-                node.ChangeColor();
-            }
+            SetColor(LightColor.Green);
+        } else if (_color == LightColor.Orange) {
+            Debug.Log("I am Orange, nothing happen if you click on me");
+        } else if (_color == LightColor.Green) {
+            if (conjugatedTrafficLight != null)
+                conjugatedWalkerLight.SwitchColor();
+                conjugatedTrafficLight.SetColor(LightColor.Green);
+            SetColor(LightColor.Orange);
             yield return new WaitForSeconds(seconds);
-            _color = COLOR.Red;
-            gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
-            foreach(CityNode node in responsibleNode) {
-                node.type = NodeType.Pavement;
-                node.ChangeColor();
-            }
+            SetColor(LightColor.Red);
         }
-
     }
+
 }
