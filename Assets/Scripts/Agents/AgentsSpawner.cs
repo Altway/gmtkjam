@@ -5,6 +5,7 @@ using UnityEngine;
 public class AgentsSpawner : MonoBehaviour
 {
     public GameObject agentPrefab;
+    public GameObject carPrefab;
     public CityGraph cityGraph;
     public float cooldown;
     public float timer;
@@ -25,12 +26,19 @@ public class AgentsSpawner : MonoBehaviour
         if(timer >= cooldown){
             timer = 0;
             SpawnAgent();
+            SpawnCar();
         }
     }
     void SpawnAgent(){
         int tempInt = Random.Range(0, cityGraph.pedestrianEntranceNodes.Count);
         Walker tempWalk = Instantiate(agentPrefab, cityGraph.pedestrianEntranceNodes[tempInt].transform.position + new Vector3(0,1,0),cityGraph.pedestrianEntranceNodes[tempInt].transform.rotation).GetComponent<Walker>();
         tempWalk.currentNode = cityGraph.pedestrianEntranceNodes[tempInt];
+        tempWalk.PickDestination();
+    }
+    void SpawnCar(){
+        int tempInt = Random.Range(0, cityGraph.carEntranceNodes.Count);
+        Car tempWalk = Instantiate(carPrefab, cityGraph.carEntranceNodes[tempInt].transform.position + new Vector3(0,1,0),cityGraph.carEntranceNodes[tempInt].transform.rotation).GetComponent<Car>();
+        tempWalk.currentNode = cityGraph.carEntranceNodes[tempInt];
         tempWalk.PickDestination();
     }
 }
