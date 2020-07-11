@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b518855b65eb94c8adb975ad27e75d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 0
   neighbors: []
   layers:
     serializedVersion: 2
