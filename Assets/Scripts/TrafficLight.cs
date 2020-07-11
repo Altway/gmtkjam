@@ -14,9 +14,10 @@ public class TrafficLight : MonoBehaviour
     void Awake()
     {
         
-        for(int i = 0)
-        _color = COLOR.Red;
-        gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
+        /*for(int i = 0){
+            _color = COLOR.Red;
+            gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
+        }*/
         foreach(CityNode node in responsibleNode) {
             node.type = NodeType.Street;
             node.ChangeColor();
@@ -25,7 +26,7 @@ public class TrafficLight : MonoBehaviour
 
     public void OnMouseUp() {
         StartCoroutine(sleepSeconds(_switchingLightTimer));
-        conjugatedTrafficLight.OnMouseUp();
+        //conjugatedTrafficLight.OnMouseUp();
     }
 
     IEnumerator sleepSeconds(float seconds)
