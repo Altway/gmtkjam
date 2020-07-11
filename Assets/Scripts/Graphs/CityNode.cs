@@ -11,7 +11,7 @@ public class CityNode : MonoBehaviour
     void Start()
     {
         FetchNeighbors();
-        ChangeColor();
+        //ChangeColor();
     }
     void FetchNeighbors(){
         RaycastHit hit;
