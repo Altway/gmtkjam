@@ -13,12 +13,20 @@ public class TrafficLight : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        _color = COLOR.Red;
-        gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
+        
+        /*for(int i = 0){
+            _color = COLOR.Red;
+            gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
+        }*/
+        foreach(CityNode node in responsibleNode) {
+            node.type = NodeType.Street;
+            node.ChangeColor();
+        }
     }
 
     public void OnMouseUp() {
         StartCoroutine(sleepSeconds(_switchingLightTimer));
+        //conjugatedTrafficLight.OnMouseUp();
     }
 
     IEnumerator sleepSeconds(float seconds)
