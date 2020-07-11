@@ -13,19 +13,12 @@ public class TrafficLight : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        
-        for(int i = 0)
         _color = COLOR.Red;
         gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
-        foreach(CityNode node in responsibleNode) {
-            node.type = NodeType.Street;
-            node.ChangeColor();
-        }
     }
 
     public void OnMouseUp() {
         StartCoroutine(sleepSeconds(_switchingLightTimer));
-        conjugatedTrafficLight.OnMouseUp();
     }
 
     IEnumerator sleepSeconds(float seconds)
@@ -33,31 +26,31 @@ public class TrafficLight : MonoBehaviour
          if (_color == COLOR.Red) {
             _color = COLOR.Green;
             gameObject.GetComponent<Renderer>().material.color = new Color(0f,1f,0f, 1);
-            foreach(CityNode node in responsibleNode) {
+/*             foreach(CityNode node in responsibleNode) {
                 node.type = NodeType.Street;
                 node.ChangeColor();
             }
-        } else if (_color == COLOR.Orange) {
+  */       } else if (_color == COLOR.Orange) {
             Debug.Log("I am Orange, nothing happen");
-            foreach(CityNode node in responsibleNode) {
+/*             foreach(CityNode node in responsibleNode) {
                 node.type = NodeType.Street;
                 node.ChangeColor();
             }
-        } else if (_color == COLOR.Green) {
+  */       } else if (_color == COLOR.Green) {
             _color = COLOR.Orange;
             gameObject.GetComponent<Renderer>().material.color = new Color(1f,0.45f,0f, 1);
-            foreach(CityNode node in responsibleNode) {
+/*             foreach(CityNode node in responsibleNode) {
                 node.type = NodeType.Street;
                 node.ChangeColor();
             }
-            yield return new WaitForSeconds(seconds);
+*/           yield return new WaitForSeconds(seconds);
             _color = COLOR.Red;
             gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
-            foreach(CityNode node in responsibleNode) {
+/*             foreach(CityNode node in responsibleNode) {
                 node.type = NodeType.Pavement;
                 node.ChangeColor();
             }
-        }
+  */       }
 
     }
 }
