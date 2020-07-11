@@ -28,7 +28,7 @@ public class Walker : MonoBehaviour
         cityGraph = GameObject.Find("CityGraph").GetComponent<CityGraph>();
         agentsManager = GameObject.Find("GameManager").GetComponent<AgentsManager>();
         agentsManager.allWalker.Add(this);
-        myRend = gameObject.GetComponent<Renderer>();
+        myRend = gameObject.GetComponentInChildren<Renderer>();
     }
 
     public List<CityNode> FindPath(CityNode start, CityNode destination) {
@@ -162,7 +162,7 @@ public class Walker : MonoBehaviour
             if(state == WalkerState.Rage || state == WalkerState.Fear){
                 index++;
                 currentNode = path[index];
-                gameObject.transform.position = new Vector3(path[index].transform.position.x, 1, path[index].transform.position.z);
+                gameObject.transform.position = new Vector3(path[index].transform.position.x, 0, path[index].transform.position.z);
             }
             else{
                 if(path.Count - index > 2){
@@ -174,14 +174,14 @@ public class Walker : MonoBehaviour
                         waiting = false;
                         index++;
                         currentNode = path[index];
-                        gameObject.transform.position = new Vector3(path[index].transform.position.x, 1, path[index].transform.position.z);
+                        gameObject.transform.position = new Vector3(path[index].transform.position.x, 0, path[index].transform.position.z);
                     }
                 }
                 else{
                     waiting = false;
                     index++;
                     currentNode = path[index];
-                    gameObject.transform.position = new Vector3(path[index].transform.position.x, 1, path[index].transform.position.z);
+                    gameObject.transform.position = new Vector3(path[index].transform.position.x, 0, path[index].transform.position.z);
                 }
             }
         }

@@ -32,16 +32,13 @@ public class AgentsSpawner : MonoBehaviour
     }
     void SpawnAgent(){
         int tempInt = Random.Range(0, cityGraph.pedestrianEntranceNodes.Count);
-        Walker tempWalk = Instantiate(agentPrefab, cityGraph.pedestrianEntranceNodes[tempInt].transform.position + new Vector3(0,1,0),cityGraph.pedestrianEntranceNodes[tempInt].transform.rotation).GetComponent<Walker>();
+        Walker tempWalk = Instantiate(agentPrefab, cityGraph.pedestrianEntranceNodes[tempInt].transform.position,cityGraph.pedestrianEntranceNodes[tempInt].transform.rotation).GetComponent<Walker>();
         tempWalk.currentNode = cityGraph.pedestrianEntranceNodes[tempInt];
         tempWalk.PickDestination();
-        // @TODO Remove just for debugging
-        tempWalk.gameObject.name = MAX.ToString();
-        MAX++;
     }
     void SpawnCar(){
         int tempInt = Random.Range(0, cityGraph.carEntranceNodes.Count);
-        Car tempWalk = Instantiate(carPrefab, cityGraph.carEntranceNodes[tempInt].transform.position + new Vector3(0,1,0),cityGraph.carEntranceNodes[tempInt].transform.rotation).GetComponent<Car>();
+        Car tempWalk = Instantiate(carPrefab, cityGraph.carEntranceNodes[tempInt].transform.position,cityGraph.carEntranceNodes[tempInt].transform.rotation).GetComponent<Car>();
         tempWalk.currentNode = cityGraph.carEntranceNodes[tempInt];
         tempWalk.PickDestination();
     }

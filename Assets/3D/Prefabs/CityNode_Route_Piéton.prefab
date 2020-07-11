@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1676813703370758379}
   - component: {fileID: 1676813703370758380}
   - component: {fileID: 1676813703370758381}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "CityNode_Route_Pi\xE9ton"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,8 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b518855b65eb94c8adb975ad27e75d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 0
   neighbors: []
   layers:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 256

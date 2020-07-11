@@ -15,19 +15,19 @@ public class CityNode : MonoBehaviour
     }
     void FetchNeighbors(){
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, new Vector3(1, 0, 0), out hit, 1)){
+        if(Physics.Raycast(transform.position, new Vector3(1, 0, 0), out hit, 1, layers)){
             if(!neighbors.Contains(hit.transform.gameObject.GetComponent<CityNode>()))
                 neighbors.Add(hit.transform.gameObject.GetComponent<CityNode>());
         }
-        if(Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out hit, 1)){
+        if(Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out hit, 1, layers)){
             if(!neighbors.Contains(hit.transform.gameObject.GetComponent<CityNode>()))
                 neighbors.Add(hit.transform.gameObject.GetComponent<CityNode>());
         }
-        if(Physics.Raycast(transform.position, new Vector3(0, 0, 1), out hit, 1)){
+        if(Physics.Raycast(transform.position, new Vector3(0, 0, 1), out hit, 1, layers)){
             if(!neighbors.Contains(hit.transform.gameObject.GetComponent<CityNode>()))
                 neighbors.Add(hit.transform.gameObject.GetComponent<CityNode>());
         }
-        if(Physics.Raycast(transform.position, new Vector3(0, 0, -1), out hit, 1)){
+        if(Physics.Raycast(transform.position, new Vector3(0, 0, -1), out hit, 1, layers)){
             if(!neighbors.Contains(hit.transform.gameObject.GetComponent<CityNode>()))
                 neighbors.Add(hit.transform.gameObject.GetComponent<CityNode>());
         }
