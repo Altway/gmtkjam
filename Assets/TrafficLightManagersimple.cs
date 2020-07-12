@@ -9,6 +9,7 @@ public class TrafficLightManagersimple : MonoBehaviour
 {
     public TrafficLightsimple[] trafficRoadDuo = new TrafficLightsimple[2];
     public WalkerLight[] trafficWalkerDuo = new WalkerLight[2];
+    
 
     void Start()
     {
