@@ -9,10 +9,14 @@ public class TrafficLightManager : MonoBehaviour
 {
     public List<TrafficLight> trafficLightList = new List<TrafficLight>();
     public List<WalkerLight> walkerLightList = new List<WalkerLight>();
-
-
+    public ParticleSystem feedback;
+    public float cooldown;
+    public float timer;
+    public bool canClick;
     void Start()
     {
+        canClick = true;
+        cooldown = 3f;
         bool alternate = true;
         foreach(TrafficLight light in trafficLightList) {
             if (alternate) {
@@ -36,12 +40,31 @@ public class TrafficLightManager : MonoBehaviour
             }
         }
     }
-    public void OnMouseUp() {
-        foreach(TrafficLight light in trafficLightList) {
-            light.MEH();
+    private void Update()
+    {
+        if(canClick == false)
+        {
+            timer += Time.deltaTime;
         }
-        foreach(WalkerLight light in walkerLightList) {
-            light.SwitchColor();
+        if(timer >= cooldown)
+        {
+            timer = 0;
+            canClick = true;
+        }
+    }
+    public void OnMouseUp() {
+        if (canClick)
+        {
+            canClick = false;
+            feedback.Play();
+            foreach (TrafficLight light in trafficLightList)
+            {
+                light.MEH();
+            }
+            foreach (WalkerLight light in walkerLightList)
+            {
+                light.SwitchColor();
+            }
         }
 
     }
