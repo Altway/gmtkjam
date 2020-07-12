@@ -154,8 +154,8 @@ public class AgentsManager : MonoBehaviour
                         currentCar.calmPathPicked = true;
                         currentCar.ragePathPicked = false;*/
                 }else{
-                    Destroy(currentCar.gameObject);
-                    allCars.Remove(currentCar);
+                    //Destroy(currentCar.gameObject);
+                    //allCars.Remove(currentCar);
                     continue;
                 }
             }
@@ -165,27 +165,7 @@ public class AgentsManager : MonoBehaviour
                 currentCar.waiting = false;
                 currentCar.waitingTimer = 0;
                 currentCar.rageTimer += Time.deltaTime;
-                if(currentCar.rageTimer >= currentCar.rageCooldown){
-                    if(currentCar.currentNode.type == NodeType.Pavement || currentCar.currentNode.type == NodeType.PedestrianEntrance || currentCar.currentNode.type == NodeType.CarEntrance){
-                        currentCar.rageTimer = 0;
-                        currentCar.state = CarState.Calm;
-                    }
-                }
-                if(!currentCar.ragePathPicked){
-                    currentCar.path = currentCar.FindPath(currentCar.currentNode, currentCar.testingDestination);
-                    currentCar.index = 0;
-                    currentCar.calmPathPicked = false;
-                    currentCar.ragePathPicked = true;
-                }else{
-                    if(currentCar.currentNode != currentCar.testingDestination){
-                        currentCar.MoveToNextNode();
-                    }
-                    else{
-                        Destroy(currentCar.gameObject);
-                        allCars.Remove(currentCar);
-                        continue;
-                    }
-                }
+                currentCar.MoveToNextNode();
             }
             else if(allCars[i].state == CarState.Broken){
                 allCars[i].myRend.material.color = Color.black;

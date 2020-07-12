@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3306445269037329852}
   - component: {fileID: 1016987254397472963}
   - component: {fileID: 7602014152661305730}
+  - component: {fileID: 1879832462657410920}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -72,6 +73,8 @@ MonoBehaviour:
   carsParent: {fileID: 0}
   cooldown: 0.8
   timer: 0
+  cooldownCar: 5
+  timerCar: 0
   MAX: 0
   started: 0
 --- !u!114 &1016987254397472963
@@ -100,4 +103,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agentMoods: []
+  carMoods: []
   camPos: {fileID: 0}
+  offset: {x: 0, y: 1.5, z: 0.5}
+--- !u!114 &1879832462657410920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3306445269037329849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f4bbd96a40f4041b74641ae51748ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

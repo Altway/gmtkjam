@@ -29,12 +29,14 @@ public class Walker : MonoBehaviour
     public AgentMood myMood;
     public AgentGraphic jumpanim;
     public Vector3 oldPosition;
+    public ParticleSystem blood;
     void Awake()
     {
         cityGraph = GameObject.Find("CityGraph").GetComponent<CityGraph>();
         agentsManager = GameObject.Find("GameManager").GetComponent<AgentsManager>();
         agentsManager.allWalker.Add(this);
         myRend = gameObject.GetComponentInChildren<Renderer>();
+        blood = transform.GetComponentInChildren<ParticleSystem>();
     }
 
     public List<CityNode> FindPath(CityNode start, CityNode destination) {
@@ -215,7 +217,7 @@ public class Walker : MonoBehaviour
             control++;
         }
         CityNode path_temp = destination;
-        Debug.Log(destination);
+        //Debug.Log(destination);
         path.Add(destination);
         while(true) {
             path_temp = visited[path_temp];

@@ -10,6 +10,7 @@ public class AgentGraphic : MonoBehaviour
     public Vector2 oldPos;
     void Start()
     {
+        transform.position += new Vector3(Random.Range(-0.25f, 0.25f),0, Random.Range(-0.25f, 0.25f));
         GameObject.Find("GameManager").GetComponent<AgentJumpAnim>().agentsGraphics.Add(this);
         sens = 1;
         transform.parent.GetComponent<Walker>().jumpanim = this;
