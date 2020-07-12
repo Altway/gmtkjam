@@ -39,7 +39,7 @@ public class CityNode : MonoBehaviour
         }
     }
     public void ChangeColor(){
-        if(type == NodeType.Street){
+/*         if(type == NodeType.Street){
             gameObject.GetComponent<Renderer>().material.color = new Color(0.1f,0.1f,0.1f, 1);
         }
         else if(type == NodeType.Pavement){
@@ -54,5 +54,5 @@ public class CityNode : MonoBehaviour
         else if(type == NodeType.Building){
             gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
         }
-    }
+ */    }
 }

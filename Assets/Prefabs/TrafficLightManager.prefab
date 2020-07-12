@@ -47,12 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3048ed9b631afe4e8611e6c56ddf141, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trafficRoadDuo:
-  - {fileID: 6829046265450381405}
-  - {fileID: 9142603893801113444}
-  trafficWalkerDuo:
-  - {fileID: 737423206906160018}
-  - {fileID: 4201288847653769110}
+  trafficLightList: []
+  walkerLightList: []
 --- !u!1001 &1936901889115281573
 PrefabInstance:
   m_ObjectHideFlags: 0

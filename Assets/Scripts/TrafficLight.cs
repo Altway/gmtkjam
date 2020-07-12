@@ -8,8 +8,6 @@ public class TrafficLight : MonoBehaviour
     public LightColor _color; 
     public float _switchingLightTimer = 1.5f;
     public List<CityNode> responsibleNode;
-    public TrafficLight conjugatedTrafficLight;
-    public WalkerLight conjugatedWalkerLight;
 
     public GameObject lightRed;
     public GameObject lightOrange;
@@ -21,22 +19,8 @@ public class TrafficLight : MonoBehaviour
     public Material greenMat;
 
     public Light redSpot;
-    public Light orangeSpot;
-    public Light greenSpot;
 
-    void Awake()
-    {
-        /*
-        if (_color == LightColor.Red)
-            gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
-        else if (_color == LightColor.Green)
-            gameObject.GetComponent<Renderer>().material.color = new Color(0f,1f,0f, 1);
-        else if (_color == LightColor.Orange)
-            gameObject.GetComponent<Renderer>().material.color = new Color(1f,0.45f,0f, 1);
-            */
-    }
-
-    public void OnMouseUp() {
+    public void MEH() {
         StartCoroutine(SwitchColor(_switchingLightTimer));
     }
 
@@ -47,7 +31,6 @@ public class TrafficLight : MonoBehaviour
             lightRed.GetComponent<Renderer>().material = redMat;
             lightOrange.GetComponent<Renderer>().material = neutralMat;
             lightGreen.GetComponent<Renderer>().material = neutralMat;
-            //gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
             ModifyCityNode(responsibleNode, NodeType.Pavement);
         }
         else if (color == LightColor.Green) {
@@ -55,7 +38,6 @@ public class TrafficLight : MonoBehaviour
             lightRed.GetComponent<Renderer>().material = neutralMat;
             lightOrange.GetComponent<Renderer>().material = neutralMat;
             lightGreen.GetComponent<Renderer>().material = greenMat;
-            //gameObject.GetComponent<Renderer>().material.color = new Color(0f,1f,0f, 1);
             ModifyCityNode(responsibleNode, NodeType.Street);
         }
         else if (color == LightColor.Orange) {
@@ -63,8 +45,6 @@ public class TrafficLight : MonoBehaviour
             lightRed.GetComponent<Renderer>().material = neutralMat;
             lightOrange.GetComponent<Renderer>().material = orangeMat;
             lightGreen.GetComponent<Renderer>().material = neutralMat;
-            //gameObject.GetComponent<Renderer>().material.color = new Color(1f,0.45f,0f, 1);
-            //ModifyCityNode(responsibleNode, NodeType.Building);
         }
     }
  
@@ -78,19 +58,10 @@ public class TrafficLight : MonoBehaviour
     IEnumerator SwitchColor(float seconds)
     {
         if (_color == LightColor.Red) {
-            if (conjugatedTrafficLight != null) {
-                conjugatedWalkerLight.SwitchColor();
-                conjugatedTrafficLight.SetColor(LightColor.Orange);
-                yield return new WaitForSeconds(seconds);
-                conjugatedTrafficLight.SetColor(LightColor.Red);
-            }
             SetColor(LightColor.Green);
         } else if (_color == LightColor.Orange) {
             Debug.Log("I am Orange, nothing happen if you click on me");
         } else if (_color == LightColor.Green) {
-            if (conjugatedTrafficLight != null)
-                conjugatedWalkerLight.SwitchColor();
-                conjugatedTrafficLight.SetColor(LightColor.Green);
             SetColor(LightColor.Orange);
             yield return new WaitForSeconds(seconds);
             SetColor(LightColor.Red);

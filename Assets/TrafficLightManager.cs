@@ -7,24 +7,43 @@ public enum LightColor{Red, Orange, Green}
 
 public class TrafficLightManager : MonoBehaviour
 {
-    public TrafficLight[] trafficRoadDuo = new TrafficLight[2];
-    public WalkerLight[] trafficWalkerDuo = new WalkerLight[2];
+    public List<TrafficLight> trafficLightList = new List<TrafficLight>();
+    public List<WalkerLight> walkerLightList = new List<WalkerLight>();
+
 
     void Start()
     {
-        trafficRoadDuo[0].conjugatedTrafficLight = trafficRoadDuo[1];
-        trafficRoadDuo[1].conjugatedTrafficLight = trafficRoadDuo[0];
-        trafficRoadDuo[0].conjugatedWalkerLight = trafficWalkerDuo[1];
-        trafficRoadDuo[1].conjugatedWalkerLight = trafficWalkerDuo[0];
+        bool alternate = true;
+        foreach(TrafficLight light in trafficLightList) {
+            if (alternate) {
+                light.SetColor(LightColor.Red);
+                alternate = false;
+            }
+            else {
+                light.SetColor(LightColor.Green);
+                alternate = true;
+            }
 
-        trafficRoadDuo[0].SetColor(LightColor.Red);
-        trafficRoadDuo[1].SetColor(LightColor.Green);
+        }
+        foreach(WalkerLight light in walkerLightList) {
+            if (alternate && !light.invert) {
+                light.SetColor(LightColor.Green);
+                alternate = false;
+            }
+            else {
+                light.SetColor(LightColor.Red);
+                alternate = true;
+            }
+        }
+    }
+    public void OnMouseUp() {
+        foreach(TrafficLight light in trafficLightList) {
+            light.MEH();
+        }
+        foreach(WalkerLight light in walkerLightList) {
+            light.SwitchColor();
+        }
 
-        trafficWalkerDuo[0].conjugatedWalkerLight = trafficWalkerDuo[1];
-        trafficWalkerDuo[1].conjugatedWalkerLight = trafficWalkerDuo[0];
-
-        trafficWalkerDuo[0].SetColor(LightColor.Green);
-        trafficWalkerDuo[1].SetColor(LightColor.Red);
     }
 
 }
