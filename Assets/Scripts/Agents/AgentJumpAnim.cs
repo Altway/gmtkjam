@@ -18,7 +18,7 @@ public class AgentJumpAnim : MonoBehaviour
             }
             else{
                 currAgent.x -= Time.deltaTime * currAgent.animSpeed;
-                if(currAgent.x <= 0){
+                if(currAgent.x <= 0.05){
                     currAgent.x=0.001f;
                     currAgent.sens = 1;
                 }

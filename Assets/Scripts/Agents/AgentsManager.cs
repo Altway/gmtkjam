@@ -57,6 +57,7 @@ public class AgentsManager : MonoBehaviour
                         // Next move
                         currentWalker.MoveToNextNode();
                 }else{
+                    currentWalker.PickDestination();
                     // I look for a path
                     currentWalker.path = currentWalker.FindPathCalm(currentWalker.currentNode, currentWalker.testingDestination);
                     if (currentWalker.path.Count != 0) {
@@ -70,6 +71,23 @@ public class AgentsManager : MonoBehaviour
             }
             else if(currentWalker.state == WalkerState.Fear){
                 currentWalker.myRend.material.color = Color.blue;
+                if(currentWalker.fearPathPicked){
+                    if(currentWalker.currentNode == currentWalker.testingDestination){
+                        currentWalker.state = WalkerState.Calm;
+                    }
+                    else{
+                        currentWalker.MoveToNextNode();
+                    }
+                }else{
+                    currentWalker.PickDestinationInFear();
+                    currentWalker.path = currentWalker.FindPathToClosestSafeSpot(currentWalker.currentNode, currentWalker.testingDestination);
+                    if(currentWalker.path.Count != 0){
+                        currentWalker.index = 0;
+                        currentWalker.calmPathPicked = false;
+                        currentWalker.fearPathPicked = true;
+                        currentWalker.ragePathPicked = false;
+                    }
+                }
                 currentWalker.waiting = false;
                 currentWalker.waitingTimer = 0;
             }

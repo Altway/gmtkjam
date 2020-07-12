@@ -18,6 +18,8 @@ public class Walker : MonoBehaviour
     public float calmSpeed;
     public float fearSpeed;
     public float rageSpeed;
+    public int fearRange;
+    public CityNode fearedNode;
     public List<CityNode> path = new List<CityNode>();
     public bool calmPathPicked;
     public bool ragePathPicked;
@@ -114,45 +116,6 @@ public class Walker : MonoBehaviour
         return path;
     }
 
-    /*public void WalkTo(CityNode destination) {
-        StartCoroutine(move(destination));
-    }*/
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.M)) {
-            foreach(CityNode node in cityGraph.allNodes)
-                Debug.Log(node.transform.position);
-        }
-        /*if (Input.GetKeyUp(KeyCode.P)) 
-            WalkTo(testingDestination);
-        */
-    }
-
-    /*IEnumerator move(CityNode destination)
-    {
-        Dictionary<CityNode, CityNode> path_dict = FindPath(currentNode, destination);
-
-        /*foreach (KeyValuePair<CityNode, CityNode> kvp in path_dict)
-        {
-            if (kvp.Key != null && kvp.Value != null)
-            print("Key =" + kvp.Key.transform.position +"Value =" + kvp.Value.transform.position);
-        }
-
-        foreach (CityNode node in path) {
-            if (node != null)
-                print("LIST_NODE: " + node.transform.position);
-        }
-        
-
-        foreach(CityNode node in path) {
-            gameObject.transform.position = new Vector3(node.transform.position.x, 1, node.transform.position.z);
-            currentNode = node;
-            yield return new WaitForSeconds(0.1f);
-        }
-    }*/
-
     public void MoveToNextNode(){
         if((new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(path[index+1].transform.position.x, 0, path[index+1].transform.position.z)).magnitude < 0.05f){
             if(state == WalkerState.Rage || state == WalkerState.Fear){
@@ -201,5 +164,64 @@ public class Walker : MonoBehaviour
         else{
             PickDestination();
         }
+    }
+    public void PickDestinationInFear(){
+        Debug.Log(fearedNode);
+        Vector3 fearDirection = (currentNode.transform.position - fearedNode.transform.position).normalized * fearRange;
+        Vector3 fearedDestination = fearDirection + fearedNode.transform.position;
+        float championMagnitude = (fearedDestination - fearedNode.transform.position).magnitude;
+        CityNode champion = fearedNode;
+        foreach(CityNode node in cityGraph.allNodes){
+            if((node.transform.position - fearedDestination).magnitude <= championMagnitude){
+                champion = node;
+                championMagnitude = (node.transform.position - fearedDestination).magnitude;
+            }
+        }
+        testingDestination = champion;
+    }
+
+
+
+
+
+
+
+
+    public List<CityNode> FindPathToClosestSafeSpot(CityNode start, CityNode destination) {
+        Queue<CityNode> frontier = new Queue<CityNode>();
+        Dictionary<CityNode, CityNode> visited = new Dictionary<CityNode, CityNode>();
+        frontier.Enqueue(start);
+
+        int MAX = 1000;
+        int control = 0;
+        while(frontier.Count > 0 || control < MAX) {
+
+            CityNode tmp = frontier.Dequeue();
+            if (tmp == destination){
+                break;
+            }
+            foreach(CityNode node in tmp.neighbors) {
+                if (!visited.ContainsKey(node)) {
+                    frontier.Enqueue(node);
+                    visited[node] = tmp;
+                }
+            }
+            if (frontier.Count == 0)
+                return path;
+            control++;
+        }
+        CityNode path_temp = destination;
+        Debug.Log(destination);
+        path.Add(destination);
+        while(true) {
+            path_temp = visited[path_temp];
+            path.Add(path_temp);
+            if (visited[path_temp] == currentNode)
+                break;
+        }
+        path.Add(currentNode);
+        path.Reverse();
+
+        return path;
     }
 }
