@@ -11,10 +11,24 @@ public class CityNode : MonoBehaviour
     public Dictionary<Vector3, CityNode> orientedNeighbors = new Dictionary<Vector3, CityNode>();
     public LayerMask layers;
 
-    public Car currentCarOnNode;
+    public bool Right;
+    public bool Left;
+
+    public bool Top;
+
+    public bool Bot;
+
     void Start()
     {
         FetchNeighbors();
+        if (Right)
+            possible_neighbors.Add(neighbors[0]);
+        if (Left)
+            possible_neighbors.Add(neighbors[1]);
+        if (Top)
+            possible_neighbors.Add(neighbors[2]);
+        if (Bot)
+            possible_neighbors.Add(neighbors[3]);
         //ChangeColor();
     }
     void FetchNeighbors(){
