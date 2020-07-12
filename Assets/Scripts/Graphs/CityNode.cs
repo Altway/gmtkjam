@@ -7,6 +7,8 @@ public class CityNode : MonoBehaviour
 {
     public NodeType type;
     public List<CityNode> neighbors = new List<CityNode>();
+    public List<CityNode> possible_neighbors = new List<CityNode>();
+    public Dictionary<Vector3, CityNode> orientedNeighbors = new Dictionary<Vector3, CityNode>();
     public LayerMask layers;
     void Start()
     {
@@ -18,18 +20,22 @@ public class CityNode : MonoBehaviour
         if(Physics.Raycast(transform.position, new Vector3(1, 0, 0), out hit, 1, layers)){
             if(!neighbors.Contains(hit.transform.gameObject.GetComponent<CityNode>()))
                 neighbors.Add(hit.transform.gameObject.GetComponent<CityNode>());
+                orientedNeighbors.Add(new Vector3(1,0,0),hit.transform.gameObject.GetComponent<CityNode>());
         }
         if(Physics.Raycast(transform.position, new Vector3(-1, 0, 0), out hit, 1, layers)){
             if(!neighbors.Contains(hit.transform.gameObject.GetComponent<CityNode>()))
                 neighbors.Add(hit.transform.gameObject.GetComponent<CityNode>());
+                orientedNeighbors.Add(new Vector3(-1,0,0),hit.transform.gameObject.GetComponent<CityNode>());
         }
         if(Physics.Raycast(transform.position, new Vector3(0, 0, 1), out hit, 1, layers)){
             if(!neighbors.Contains(hit.transform.gameObject.GetComponent<CityNode>()))
                 neighbors.Add(hit.transform.gameObject.GetComponent<CityNode>());
+                orientedNeighbors.Add(new Vector3(0,0,1),hit.transform.gameObject.GetComponent<CityNode>());
         }
         if(Physics.Raycast(transform.position, new Vector3(0, 0, -1), out hit, 1, layers)){
             if(!neighbors.Contains(hit.transform.gameObject.GetComponent<CityNode>()))
                 neighbors.Add(hit.transform.gameObject.GetComponent<CityNode>());
+                orientedNeighbors.Add(new Vector3(0,0,-1),hit.transform.gameObject.GetComponent<CityNode>());
         }
     }
     public void ChangeColor(){

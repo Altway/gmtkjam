@@ -135,67 +135,54 @@ public class AgentsManager : MonoBehaviour
         }
 
         for(int i = 0; i<allCars.Count; i++){
-            if(allCars[i].state != CarState.Broken){//If I'm not dead, orient my body based on my last position
-                Vector3 dira = (new Vector3(allCars[i].transform.position.x, 0, allCars[i].transform.position.z) - new Vector3(allCars[i].oldPosition.x, 0,allCars[i].oldPosition.z)).normalized;
-                //Debug.Log(allCars[i]);
-                //Debug.Log("un truc");
-                allCars[i].transform.LookAt(allCars[i].transform.position + dira);
-            }
-            if(allCars[i].state == CarState.Calm){
-                allCars[i].myRend.material.color = Color.white;
-                if(allCars[i].waiting){
-                    allCars[i].waitingTimer+= Time.deltaTime;
-                    if(allCars[i].waitingTimer>= allCars[i].waitingCD){
-                        allCars[i].state = CarState.Rage;
-                    }
+            Car currentCar = allCars[i];
+            if(currentCar.state == CarState.Calm){
+                currentCar.myRend.material.color = Color.white;
+                if(currentCar.waiting){
+                    currentCar.waitingTimer+= Time.deltaTime;
+                    if(currentCar.waitingTimer>= currentCar.waitingCD)
+                        currentCar.state = CarState.Rage;
                 }else{
-                    if(allCars[i].waitingTimer >= 0){
-                        allCars[i].waitingTimer -= Time.deltaTime;
-                    }
+                    if(currentCar.waitingTimer >= 0)
+                        currentCar.waitingTimer -= Time.deltaTime;
                 }
-                if(!allCars[i].calmPathPicked){
-                    allCars[i].path = allCars[i].FindPathCalm(allCars[i].currentNode, allCars[i].testingDestination);
-                    if (allCars[i].path.Count != 0) {
-                        allCars[i].index = 0;
-                        allCars[i].calmPathPicked = true;
-                        allCars[i].ragePathPicked = false;
-                    }
+/*                 if(!currentCar.calmPathPicked)
+                    currentCar.path = allCars[i].FindPathCalm(currentCar.currentNode, currentCar.testingDestination); */
+                if (currentCar.state == CarState.Calm && currentCar.currentNode != currentCar.testingDestination) {
+                    currentCar.MoveToNextNode();
+                        /*currentCar.index = 0;
+                        currentCar.calmPathPicked = true;
+                        currentCar.ragePathPicked = false;*/
                 }else{
-                    if(allCars[i].currentNode != allCars[i].testingDestination){
-                        if (allCars[i].path.Count != 0) {
-                            allCars[i].MoveToNextNode();
-                        }
-                    }
-                    else{
-                        Destroy(allCars[i].gameObject);
-                        allCars.Remove(allCars[i]);
-                        continue;
-                    }
+                    Destroy(currentCar.gameObject);
+                    allCars.Remove(currentCar);
+                    continue;
                 }
             }
-            else if(allCars[i].state == CarState.Rage){
-                allCars[i].myRend.material.color = Color.red;
-                allCars[i].waiting = false;
-                allCars[i].waitingTimer = 0;
-                allCars[i].rageTimer += Time.deltaTime;
-                if(allCars[i].rageTimer >= allCars[i].rageCooldown){
-                    if(allCars[i].currentNode.type == NodeType.Pavement || allCars[i].currentNode.type == NodeType.PedestrianEntrance || allCars[i].currentNode.type == NodeType.CarEntrance){
-                        allCars[i].rageTimer = 0;
-                        allCars[i].state = CarState.Calm;
+            
+            else if(currentCar.state == CarState.Rage){
+                currentCar.myRend.material.color = Color.red;
+                currentCar.waiting = false;
+                currentCar.waitingTimer = 0;
+                currentCar.rageTimer += Time.deltaTime;
+                if(currentCar.rageTimer >= currentCar.rageCooldown){
+                    if(currentCar.currentNode.type == NodeType.Pavement || currentCar.currentNode.type == NodeType.PedestrianEntrance || currentCar.currentNode.type == NodeType.CarEntrance){
+                        currentCar.rageTimer = 0;
+                        currentCar.state = CarState.Calm;
                     }
                 }
-                if(!allCars[i].ragePathPicked){
-                    allCars[i].path = allCars[i].FindPath(allCars[i].currentNode, allCars[i].testingDestination);
-                    allCars[i].index = 0;
-                    allCars[i].calmPathPicked = false;
-                    allCars[i].ragePathPicked = true;
+                if(!currentCar.ragePathPicked){
+                    currentCar.path = currentCar.FindPath(currentCar.currentNode, currentCar.testingDestination);
+                    currentCar.index = 0;
+                    currentCar.calmPathPicked = false;
+                    currentCar.ragePathPicked = true;
                 }else{
-                    if(allCars[i].currentNode != allCars[i].testingDestination){
-                        allCars[i].MoveToNextNode();
+                    if(currentCar.currentNode != currentCar.testingDestination){
+                        currentCar.MoveToNextNode();
                     }
                     else{
-                        Destroy(allCars[i].gameObject);
-                        allCars.Remove(allCars[i]);
+                        Destroy(currentCar.gameObject);
+                        allCars.Remove(currentCar);
                         continue;
                     }
                 }
