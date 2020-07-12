@@ -11,14 +11,29 @@ public class TrafficLight : MonoBehaviour
     public TrafficLight conjugatedTrafficLight;
     public WalkerLight conjugatedWalkerLight;
 
+    public GameObject lightRed;
+    public GameObject lightOrange;
+    public GameObject lightGreen;
+
+    public Material neutralMat;
+    public Material redMat;
+    public Material orangeMat;
+    public Material greenMat;
+
+    public Light redSpot;
+    public Light orangeSpot;
+    public Light greenSpot;
+
     void Awake()
     {
+        /*
         if (_color == LightColor.Red)
             gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
         else if (_color == LightColor.Green)
             gameObject.GetComponent<Renderer>().material.color = new Color(0f,1f,0f, 1);
         else if (_color == LightColor.Orange)
             gameObject.GetComponent<Renderer>().material.color = new Color(1f,0.45f,0f, 1);
+            */
     }
 
     public void OnMouseUp() {
@@ -28,15 +43,27 @@ public class TrafficLight : MonoBehaviour
     public void SetColor(LightColor color) {
         _color = color;
         if (color == LightColor.Red) {
-            gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
+            redSpot.color = Color.red;
+            lightRed.GetComponent<Renderer>().material = redMat;
+            lightOrange.GetComponent<Renderer>().material = neutralMat;
+            lightGreen.GetComponent<Renderer>().material = neutralMat;
+            //gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
             ModifyCityNode(responsibleNode, NodeType.Pavement);
         }
         else if (color == LightColor.Green) {
-            gameObject.GetComponent<Renderer>().material.color = new Color(0f,1f,0f, 1);
+            redSpot.color = Color.green;
+            lightRed.GetComponent<Renderer>().material = neutralMat;
+            lightOrange.GetComponent<Renderer>().material = neutralMat;
+            lightGreen.GetComponent<Renderer>().material = greenMat;
+            //gameObject.GetComponent<Renderer>().material.color = new Color(0f,1f,0f, 1);
             ModifyCityNode(responsibleNode, NodeType.Street);
         }
         else if (color == LightColor.Orange) {
-            gameObject.GetComponent<Renderer>().material.color = new Color(1f,0.45f,0f, 1);
+            redSpot.color = new Color(1f, 0.45f, 0f, 1);
+            lightRed.GetComponent<Renderer>().material = neutralMat;
+            lightOrange.GetComponent<Renderer>().material = orangeMat;
+            lightGreen.GetComponent<Renderer>().material = neutralMat;
+            //gameObject.GetComponent<Renderer>().material.color = new Color(1f,0.45f,0f, 1);
             //ModifyCityNode(responsibleNode, NodeType.Building);
         }
     }
