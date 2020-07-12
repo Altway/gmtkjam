@@ -45,6 +45,7 @@ public class AgentsSpawner : MonoBehaviour
         int tempInt = Random.Range(0, cityGraph.carEntranceNodes.Count);
         Car tempWalk = Instantiate(carPrefab, cityGraph.carEntranceNodes[tempInt].transform.position,cityGraph.carEntranceNodes[tempInt].transform.rotation).GetComponent<Car>();
         tempWalk.currentNode = cityGraph.carEntranceNodes[tempInt];
+        tempWalk.next_node = tempWalk.currentNode.possible_neighbors[Random.Range(0, tempWalk.currentNode.possible_neighbors.Count)];
         tempWalk.PickDestination();
         tempWalk.transform.SetParent(carsParent);
     }
