@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WalkerState{Calm, Fear, Rage}
-public enum CarState{Calm, Rage}
+public enum WalkerState{Calm, Fear, Rage, Death}
+public enum CarState{Calm, Rage, Broken}
 public class AgentsManager : MonoBehaviour
 {
     public List<Walker> allWalker = new List<Walker>();
@@ -33,6 +33,11 @@ public class AgentsManager : MonoBehaviour
             timer = 0;
         for(int i = 0; i<allWalker.Count; i++){
             Walker currentWalker = allWalker[i];
+            
+            if(currentWalker.state != WalkerState.Death && currentWalker.path.Count-1 > currentWalker.index){//If I'm not dead, orient my body based on my last position
+                Vector3 dir = currentWalker.path[currentWalker.index].transform.position - currentWalker.path[currentWalker.index+1].transform.position;
+                currentWalker.transform.LookAt(dir + currentWalker.transform.position);
+            }
             // I am calm
             if(currentWalker.state == WalkerState.Calm){
                 currentWalker.myRend.material.color = Color.white;
@@ -119,9 +124,23 @@ public class AgentsManager : MonoBehaviour
                     }
                 }
             }
+            else if(currentWalker.state == WalkerState.Death){
+                currentWalker.myRend.material.color = Color.black;
+                if(currentWalker.jumpanim != null)
+                {
+                    Destroy(currentWalker.jumpanim);
+                }
+                currentWalker.transform.eulerAngles = new Vector3(-90, 0,0);
+            }
         }
 
         for(int i = 0; i<allCars.Count; i++){
+            if(allCars[i].state != CarState.Broken){//If I'm not dead, orient my body based on my last position
+                Vector3 dira = (new Vector3(allCars[i].transform.position.x, 0, allCars[i].transform.position.z) - new Vector3(allCars[i].oldPosition.x, 0,allCars[i].oldPosition.z)).normalized;
+                //Debug.Log(allCars[i]);
+                //Debug.Log("un truc");
+                allCars[i].transform.LookAt(allCars[i].transform.position + dira);
+            }
             if(allCars[i].state == CarState.Calm){
                 allCars[i].myRend.material.color = Color.white;
                 if(allCars[i].waiting){
@@ -181,6 +200,11 @@ public class AgentsManager : MonoBehaviour
                     }
                 }
             }
+            else if(allCars[i].state == CarState.Broken){
+                allCars[i].myRend.material.color = Color.black;
+            }
+            //Debug.Log("J'y arrive");
+            allCars[i].oldPosition = allCars[i].transform.position;
         }
     }
 }

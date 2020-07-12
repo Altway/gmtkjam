@@ -12,6 +12,7 @@ public class AgentGraphic : MonoBehaviour
     {
         GameObject.Find("GameManager").GetComponent<AgentJumpAnim>().agentsGraphics.Add(this);
         sens = 1;
+        transform.parent.GetComponent<Walker>().jumpanim = this;
     }
 
     // Update is called once per frame

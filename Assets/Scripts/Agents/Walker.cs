@@ -25,6 +25,10 @@ public class Walker : MonoBehaviour
     public bool ragePathPicked;
     public bool fearPathPicked;
     public int index;
+    public Sprite mood;
+    public AgentMood myMood;
+    public AgentGraphic jumpanim;
+    public Vector3 oldPosition;
     void Awake()
     {
         cityGraph = GameObject.Find("CityGraph").GetComponent<CityGraph>();

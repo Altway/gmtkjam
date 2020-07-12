@@ -21,6 +21,7 @@ public class Car : MonoBehaviour
     public bool calmPathPicked;
     public bool ragePathPicked;
     public int index;
+    public Vector3 oldPosition;
     void Awake()
     {
         cityGraph = GameObject.Find("CityGraph").GetComponent<CityGraph>();
