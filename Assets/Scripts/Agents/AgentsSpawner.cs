@@ -7,6 +7,8 @@ public class AgentsSpawner : MonoBehaviour
     public GameObject agentPrefab;
     public GameObject carPrefab;
     public CityGraph cityGraph;
+    public Transform walkersParent;
+    public Transform carsParent;
     public float cooldown;
     public float timer;
     public int MAX=0;
@@ -14,6 +16,8 @@ public class AgentsSpawner : MonoBehaviour
     void Start()
     {
         cityGraph = GameObject.Find("CityGraph").GetComponent<CityGraph>();
+        carsParent = GameObject.Find("Cars").transform;
+        walkersParent = GameObject.Find("Walkers").transform;
     }
     void Update()
     {
@@ -26,7 +30,7 @@ public class AgentsSpawner : MonoBehaviour
         timer += Time.deltaTime;
         if(timer >= cooldown){
             timer = 0;
-            // SpawnAgent();
+            SpawnAgent();
             SpawnCar();
         }
     }
@@ -35,11 +39,13 @@ public class AgentsSpawner : MonoBehaviour
         Walker tempWalk = Instantiate(agentPrefab, cityGraph.pedestrianEntranceNodes[tempInt].transform.position,cityGraph.pedestrianEntranceNodes[tempInt].transform.rotation).GetComponent<Walker>();
         tempWalk.currentNode = cityGraph.pedestrianEntranceNodes[tempInt];
         tempWalk.PickDestination();
+        tempWalk.transform.SetParent(walkersParent);
     }
     void SpawnCar(){
         int tempInt = Random.Range(0, cityGraph.carEntranceNodes.Count);
         Car tempWalk = Instantiate(carPrefab, cityGraph.carEntranceNodes[tempInt].transform.position,cityGraph.carEntranceNodes[tempInt].transform.rotation).GetComponent<Car>();
         tempWalk.currentNode = cityGraph.carEntranceNodes[tempInt];
         tempWalk.PickDestination();
+        tempWalk.transform.SetParent(carsParent);
     }
 }
