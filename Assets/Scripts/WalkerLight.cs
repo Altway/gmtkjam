@@ -10,22 +10,29 @@ public class WalkerLight : MonoBehaviour
     public WalkerLight conjugatedWalkerLight;
     public TrafficLight conjugatedTrafficLight;
 
+    public GameObject lightPieton;
+    public Material greenMat;
+    public Material redMat;
+
 
     public void SetColor(LightColor color) {
         _color = color;
         if (color == LightColor.Red) {
             _color = LightColor.Red;
-            gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
+            lightPieton.GetComponent<Renderer>().material = redMat;
+           // gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
         } else {
             _color = LightColor.Green;
-            gameObject.GetComponent<Renderer>().material.color = new Color(0f,1f,0f, 1);
+            lightPieton.GetComponent<Renderer>().material = greenMat;
+            // gameObject.GetComponent<Renderer>().material.color = new Color(0f,1f,0f, 1);
         }
     }
+    
     public void SwitchColor()
     {
         if (_color == LightColor.Red) {
             if (conjugatedWalkerLight != null)
-                conjugatedWalkerLight.SetColor(LightColor.Red);
+               conjugatedWalkerLight.SetColor(LightColor.Red);
             SetColor(LightColor.Green);
         } else if (_color == LightColor.Green) {
             if (conjugatedWalkerLight != null)
@@ -33,4 +40,5 @@ public class WalkerLight : MonoBehaviour
             SetColor(LightColor.Red);
         }
     }
+    
 }

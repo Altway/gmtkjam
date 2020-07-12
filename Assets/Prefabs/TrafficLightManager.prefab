@@ -217,6 +217,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7198527779124913713, guid: fad669e2cc2af4e4783a5e4eb523986f,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -2432090755550338912, guid: bd7669b6d39607e43a9656fdcc5cbe4e,
+        type: 3}
     - target: {fileID: 7205847144830439361, guid: fad669e2cc2af4e4783a5e4eb523986f,
         type: 3}
       propertyPath: conjugatedWalkerLight
@@ -259,6 +265,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WalkerLight_1
       objectReference: {fileID: 0}
+    - target: {fileID: 1234228864012533374, guid: 15a7d3c9fe445c44ba5a19444109da0d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 481751787cf49b042a0080fef3d3fd26, type: 2}
     - target: {fileID: 3389942491062367985, guid: 15a7d3c9fe445c44ba5a19444109da0d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -356,6 +367,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WalkerLight_2
       objectReference: {fileID: 0}
+    - target: {fileID: 1234228864012533374, guid: 15a7d3c9fe445c44ba5a19444109da0d,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 481751787cf49b042a0080fef3d3fd26, type: 2}
     - target: {fileID: 3389942491062367985, guid: 15a7d3c9fe445c44ba5a19444109da0d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -421,6 +437,11 @@ PrefabInstance:
       propertyPath: conjugatedWalkerLight
       value: 
       objectReference: {fileID: 737423206906160018}
+    - target: {fileID: 6756968029996034757, guid: 15a7d3c9fe445c44ba5a19444109da0d,
+        type: 3}
+      propertyPath: _color
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15a7d3c9fe445c44ba5a19444109da0d, type: 3}
 --- !u!4 &5225043980699653026 stripped
