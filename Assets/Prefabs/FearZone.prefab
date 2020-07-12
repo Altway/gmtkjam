@@ -59,6 +59,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 8
+  emittingNode: {fileID: 0}
+  duration: 10
 --- !u!54 &7317937470735046813
 Rigidbody:
   m_ObjectHideFlags: 0
