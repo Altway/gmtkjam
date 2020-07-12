@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4106760100178679714}
   - component: {fileID: 4106760100178679717}
   - component: {fileID: 4106760100178679716}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CityNode_Car_Spawning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,8 +106,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b518855b65eb94c8adb975ad27e75d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
+  type: 3
   neighbors: []
   layers:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 256

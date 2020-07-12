@@ -30,23 +30,16 @@ public class Car : MonoBehaviour
     }
 
     public List<CityNode> FindPath(CityNode start, CityNode destination) {
-        path.Clear();
         Queue<CityNode> frontier = new Queue<CityNode>();
         frontier.Enqueue(start);
         Dictionary<CityNode, CityNode> visited = new Dictionary<CityNode, CityNode>();
-        visited[start] = null;
         int MAX = 1000;
         int control = 0;
         while(frontier.Count > 0 || control < MAX) {
 
-            if (frontier.Count == 0){
-                break;
-            }
             CityNode tmp = frontier.Dequeue();
-            if (tmp == destination) {
-                Debug.Log("Found destination");
+            if (tmp == destination) 
                 break;
-            }
 
             foreach(CityNode node in tmp.neighbors) {
                 if (!visited.ContainsKey(node)) {
@@ -54,38 +47,40 @@ public class Car : MonoBehaviour
                     visited[node] = tmp;
                 }
             }
+            if (frontier.Count == 0)
+                return path;
             control++;
 
         }
-        if (frontier.Count != 0) {
-            CityNode path_temp = destination;
-            path.Add(destination);
-            while(true) {
-                path_temp = visited[path_temp];
-                path.Add(path_temp);
-                if (visited[path_temp] == currentNode)
-                    break;
-            }
-            path.Add(currentNode);
-            path.Reverse();
+        /* foreach (KeyValuePair<CityNode, CityNode> kvp in visited)
+        {
+            if (kvp.Key != null && kvp.Value != null)
+                print("Key =" + kvp.Key.transform.position +"Value =" + kvp.Value.transform.position);
+            else
+                print(kvp.Key.transform.position);
         }
+ */     CityNode path_temp = destination;
+        path.Add(destination);
+        while(true) {
+            path_temp = visited[path_temp];
+            path.Add(path_temp);
+            if (visited[path_temp] == currentNode)
+                break;
+        }
+        path.Add(currentNode);
+        path.Reverse();
         return path;
 
     }
     public List<CityNode> FindPathCalm(CityNode start, CityNode destination) {
-        path.Clear();
         Queue<CityNode> frontier = new Queue<CityNode>();
-        frontier.Enqueue(start);
         Dictionary<CityNode, CityNode> visited = new Dictionary<CityNode, CityNode>();
-        visited[start] = null;
+        frontier.Enqueue(start);
 
         int MAX = 1000;
         int control = 0;
         while(frontier.Count > 0 || control < MAX) {
 
-            if (frontier.Count == 0){
-                break;
-            }
             CityNode tmp = frontier.Dequeue();
             if (tmp == destination) {
                 break;
@@ -93,29 +88,36 @@ public class Car : MonoBehaviour
 
             foreach(CityNode node in tmp.neighbors) {
                 if (!visited.ContainsKey(node)) {
-                    if(node.type == NodeType.CarEntrance || node.type == NodeType.Street || node.type == NodeType.CarEntrance){
+                    if(node.type == NodeType.CarEntrance || node.type == NodeType.Street){
                         frontier.Enqueue(node);
                         visited[node] = tmp;
                     }
                 }
             }
+            if (frontier.Count == 0) {
+                return path;
+            }
             control++;
 
         }
-        if (frontier.Count != 0) {
-            CityNode path_temp = destination;
-            path.Add(destination);
-            while(true) {
-                path_temp = visited[path_temp];
-                path.Add(path_temp);
-                if (visited[path_temp] == currentNode)
-                    break;
-            }
-            path.Add(currentNode);
-            path.Reverse();
+        /* foreach (KeyValuePair<CityNode, CityNode> kvp in visited)
+        {
+            if (kvp.Key != null && kvp.Value != null)
+                print("Key =" + kvp.Key.transform.position +"Value =" + kvp.Value.transform.position);
+            else
+                print(kvp.Key.transform.position);
+        } */
+        CityNode path_temp = destination;
+        path.Add(destination);
+        while(true) {
+            path_temp = visited[path_temp];
+            path.Add(path_temp);
+            if (visited[path_temp] == currentNode)
+                break;
         }
+        path.Add(currentNode);
+        path.Reverse();
         return path;
-
     }
 
     /*public void WalkTo(CityNode destination) {
@@ -162,7 +164,7 @@ public class Car : MonoBehaviour
             if(state == CarState.Rage){
                 index++;
                 currentNode = path[index];
-                gameObject.transform.position = new Vector3(path[index].transform.position.x, 1, path[index].transform.position.z);
+                gameObject.transform.position = new Vector3(path[index].transform.position.x, 0, path[index].transform.position.z);
             }
             else{
                 if(path.Count - index > 2){
@@ -174,14 +176,14 @@ public class Car : MonoBehaviour
                         waiting = false;
                         index++;
                         currentNode = path[index];
-                        gameObject.transform.position = new Vector3(path[index].transform.position.x, 1, path[index].transform.position.z);
+                        gameObject.transform.position = new Vector3(path[index].transform.position.x, 0, path[index].transform.position.z);
                     }
                 }
                 else{
                     waiting = false;
                     index++;
                     currentNode = path[index];
-                    gameObject.transform.position = new Vector3(path[index].transform.position.x, 1, path[index].transform.position.z);
+                    gameObject.transform.position = new Vector3(path[index].transform.position.x, 0, path[index].transform.position.z);
                 }
             }
         }
