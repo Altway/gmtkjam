@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3306445269037329855}
   - component: {fileID: 3306445269037329854}
   - component: {fileID: 3306445269037329852}
+  - component: {fileID: 1016987254397472963}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -44,9 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 568f087dea31aee46bb6df6bf1b3bd21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allWalkers: []
+  allWalker: []
   allCars: []
   started: 0
+  timer: 0
+  cooldown: 0
 --- !u!114 &3306445269037329852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,7 +64,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agentPrefab: {fileID: 1787122531820239660, guid: 6e4a25f8dc8eaf44a9f4217f1c5cccc2,
     type: 3}
+  carPrefab: {fileID: 0}
   cityGraph: {fileID: 0}
   cooldown: 0.6
   timer: 0
+  MAX: 0
   started: 0
+--- !u!114 &1016987254397472963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3306445269037329849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1894e2b0869fe43b5e354fab0deefd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentsGraphics: []

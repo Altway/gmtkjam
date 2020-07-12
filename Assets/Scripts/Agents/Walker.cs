@@ -158,7 +158,7 @@ public class Walker : MonoBehaviour
     }*/
 
     public void MoveToNextNode(){
-        if((new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(path[index+1].transform.position.x, 0, path[index+1].transform.position.z)).magnitude < 0.2f){
+        if((new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(path[index+1].transform.position.x, 0, path[index+1].transform.position.z)).magnitude < 0.05f){
             if(state == WalkerState.Rage || state == WalkerState.Fear){
                 index++;
                 currentNode = path[index];
