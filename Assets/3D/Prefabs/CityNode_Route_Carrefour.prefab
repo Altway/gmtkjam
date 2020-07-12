@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1328551790099008371}
   - component: {fileID: 1328551790099008372}
   - component: {fileID: 1328551790099008373}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CityNode_Route_Carrefour
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,4 +110,4 @@ MonoBehaviour:
   neighbors: []
   layers:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 256

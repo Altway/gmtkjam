@@ -26,8 +26,8 @@ public class AgentsSpawner : MonoBehaviour
         timer += Time.deltaTime;
         if(timer >= cooldown){
             timer = 0;
-            SpawnAgent();
-            //SpawnCar();
+            // SpawnAgent();
+            SpawnCar();
         }
     }
     void SpawnAgent(){

@@ -110,4 +110,4 @@ MonoBehaviour:
   neighbors: []
   layers:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 256

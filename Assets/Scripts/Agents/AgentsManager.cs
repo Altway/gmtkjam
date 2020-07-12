@@ -118,9 +118,6 @@ public class AgentsManager : MonoBehaviour
                 }
                 if(!allCars[i].calmPathPicked){
                     allCars[i].path = allCars[i].FindPathCalm(allCars[i].currentNode, allCars[i].testingDestination);
-                    if (allCars[i].path.Count == 0) {
-                        print("YOLO");
-                    }
                     if (allCars[i].path.Count != 0) {
                         allCars[i].index = 0;
                         allCars[i].calmPathPicked = true;

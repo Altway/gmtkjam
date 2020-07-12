@@ -40,9 +40,8 @@ public class Walker : MonoBehaviour
         while(frontier.Count > 0 || control < MAX) {
 
             CityNode tmp = frontier.Dequeue();
-            if (tmp == destination) {
+            if (tmp == destination)
                 break;
-            }
 
             foreach(CityNode node in tmp.neighbors) {
                 if (!visited.ContainsKey(node)) {
@@ -50,9 +49,8 @@ public class Walker : MonoBehaviour
                     visited[node] = tmp;
                 }
             }
-            if (frontier.Count == 0){
+            if (frontier.Count == 0)
                 return path;
-            }
             control++;
 
         }
@@ -92,7 +90,6 @@ public class Walker : MonoBehaviour
             }
             if (frontier.Count == 0)
                 return path;
-
             control++;
         }
 
@@ -103,7 +100,7 @@ public class Walker : MonoBehaviour
             else
                 print(kvp.Key.transform.position);
         }
-  */       CityNode path_temp = destination;
+  */    CityNode path_temp = destination;
         path.Add(destination);
         while(true) {
             path_temp = visited[path_temp];
@@ -115,7 +112,6 @@ public class Walker : MonoBehaviour
         path.Reverse();
 
         return path;
-
     }
 
     /*public void WalkTo(CityNode destination) {
