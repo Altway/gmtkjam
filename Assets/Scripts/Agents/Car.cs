@@ -23,12 +23,14 @@ public class Car : MonoBehaviour
     public bool ragePathPicked;
     public int index;
     public Vector3 oldPosition;
+    public ParticleSystem expl;
     void Awake()
     {
         cityGraph = GameObject.Find("CityGraph").GetComponent<CityGraph>();
         agentsManager = GameObject.Find("GameManager").GetComponent<AgentsManager>();
         agentsManager.allCars.Add(this);
         myRend = gameObject.GetComponent<Renderer>();
+        expl = transform.GetComponentInChildren<ParticleSystem>();
     }
 
     public List<CityNode> FindPath(CityNode start, CityNode destination) {
@@ -122,49 +124,70 @@ public class Car : MonoBehaviour
         return path;
     }
 
-    public void PickNode(CityNode node) {
-            PickNode(node);
-    }
+    /*public void PickNode(CityNode node) {
+        PickNode(node);
+    }*/
 
     public void MoveToNextNode(){
-        bool hasArrived = ((new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(next_node.transform.position.x, 0, next_node.transform.position.z)).magnitude < 0.1f);
+        bool hasArrived = false;
         if(state == CarState.Rage){
+            hasArrived = ((new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(next_node.transform.position.x, 0, next_node.transform.position.z)).magnitude < 0.1f);
             if (hasArrived) {
-                gameObject.transform.position += ( new Vector3(path[index+1].transform.position.x, 0, path[index+1].transform.position.z) - new Vector3(transform.position.x, 0, transform.position.z) ).normalized * rageSpeed * Time.deltaTime;
-            } else {
-                index++;
-                currentNode = path[index];
-                gameObject.transform.position = new Vector3(path[index].transform.position.x, 0, path[index].transform.position.z);
-            }
-        
-        } else if (state == CarState.Calm) {
-            if (hasArrived) {
+                if(currentNode.type == NodeType.CarExit){
+                    Destroy(gameObject);
+                }
+                currentNode.currentCarOnNode = null;
                 currentNode = next_node;
+                currentNode.currentCarOnNode = this;
                 next_node= currentNode.possible_neighbors[Random.Range(0, currentNode.possible_neighbors.Count)];
             } else {
-                if (next_node.type == NodeType.CarEntrance || next_node.type == NodeType.Street) 
+                if(next_node.currentCarOnNode == null){
+                    transform.LookAt(next_node.transform.position);
                     gameObject.transform.position += ( new Vector3(next_node.transform.position.x, 0, next_node.transform.position.z) - new Vector3(transform.position.x, 0, transform.position.z) ).normalized * calmSpeed * Time.deltaTime;
+                }
+                else{
+                    next_node= currentNode.possible_neighbors[Random.Range(0, currentNode.possible_neighbors.Count)];
+                }
             }
-
-/*             if (next_node == null)
-                hasArrived = true;
+        }else if (state == CarState.Calm) {
+            hasArrived = ((new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(next_node.transform.position.x, 0, next_node.transform.position.z)).magnitude < 0.1f);
             if (hasArrived) {
-                next_node = currentNode.possible_neighbors[Random.Range(0, currentNode.possible_neighbors.Count)];
-                gameObject.transform.position = new Vector3(next_node.transform.position.x, 0, next_node.transform.position.z);
-                
-                print("CURRENT: " + currentNode.transform.position);
-                print("NEXT NODE: " + next_node.transform.position);
+                if(currentNode.type == NodeType.CarExit){
+                    Destroy(gameObject);
+                }
+                currentNode.currentCarOnNode = null;
+                currentNode = next_node;
+                currentNode.currentCarOnNode = this;
+                next_node= currentNode.possible_neighbors[Random.Range(0, currentNode.possible_neighbors.Count)];
+            } else {
+                if ((next_node.type == NodeType.CarEntrance || next_node.type == NodeType.Street) && next_node.currentCarOnNode == null){
+                    gameObject.transform.position += ( new Vector3(next_node.transform.position.x, 0, next_node.transform.position.z) - new Vector3(transform.position.x, 0, transform.position.z) ).normalized * calmSpeed * Time.deltaTime;
+                    waiting = false;
+                    waitingTimer-= Time.deltaTime;
+                    transform.LookAt(next_node.transform.position);
+                }
+                else{
+                    waiting = true;
+                    waitingTimer+= Time.deltaTime;
+                    if(waitingCD <= waitingTimer){
+                        state = CarState.Rage;
+                        ragePathPicked = false;
+                    }
+                }
             }
-            gameObject.transform.position += ( new Vector3(next_node.transform.position.x, 0, next_node.transform.position.z) - new Vector3(transform.position.x, 0, transform.position.z) ).normalized * calmSpeed * Time.deltaTime;
-  */       }
+        } 
     }
     public void PickDestination(){
-        int temp = Random.Range(0, cityGraph.carEntranceNodes.Count);
-        if(cityGraph.carEntranceNodes[temp] != currentNode){
-            testingDestination = cityGraph.carEntranceNodes[temp];
+        int temp = Random.Range(0, cityGraph.carExitNodes.Count);
+        if(cityGraph.carExitNodes[temp] != currentNode){
+            testingDestination = cityGraph.carExitNodes[temp];
         }
         else{
             PickDestination();
         }
+    }
+
+    void OnDestroy(){
+        agentsManager.allCars.Remove(this);
     }
 }

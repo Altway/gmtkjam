@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum NodeType{Street, Pavement,PedestrianEntrance,CarEntrance, Building}
+public enum NodeType{Street, Pavement,PedestrianEntrance,CarEntrance, Building, CarExit}
 public class CityNode : MonoBehaviour
 {
     public NodeType type;
@@ -10,6 +10,8 @@ public class CityNode : MonoBehaviour
     public List<CityNode> possible_neighbors = new List<CityNode>();
     public Dictionary<Vector3, CityNode> orientedNeighbors = new Dictionary<Vector3, CityNode>();
     public LayerMask layers;
+
+    public Car currentCarOnNode;
     void Start()
     {
         FetchNeighbors();
@@ -39,20 +41,20 @@ public class CityNode : MonoBehaviour
         }
     }
     public void ChangeColor(){
-/*         if(type == NodeType.Street){
-            gameObject.GetComponent<Renderer>().material.color = new Color(0.1f,0.1f,0.1f, 1);
+        if(type == NodeType.Street){
+            //gameObject.GetComponent<Renderer>().material.color = new Color(0.1f,0.1f,0.1f, 1);
         }
         else if(type == NodeType.Pavement){
-            gameObject.GetComponent<Renderer>().material.color = new Color(0.8f,0.8f,0.8f, 1);
+            //gameObject.GetComponent<Renderer>().material.color = new Color(0.8f,0.8f,0.8f, 1);
         }
         else if(type == NodeType.PedestrianEntrance){
-            gameObject.GetComponent<Renderer>().material.color = new Color(0.2f,0.2f,0.2f, 1);
+            //gameObject.GetComponent<Renderer>().material.color = new Color(0.2f,0.2f,0.2f, 1);
         }
         else if(type == NodeType.CarEntrance){
-            gameObject.GetComponent<Renderer>().material.color = new Color(0.4f,0.4f,0.4f, 1);
+            //gameObject.GetComponent<Renderer>().material.color = new Color(0.4f,0.4f,0.4f, 1);
         }
         else if(type == NodeType.Building){
-            gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
+            //gameObject.GetComponent<Renderer>().material.color = new Color(1f,0f,0f, 1);
         }
- */    }
+    }
 }
